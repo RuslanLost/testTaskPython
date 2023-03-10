@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 options = webdriver.FirefoxOptions()
 from selenium.webdriver.common.by import By
 
-# укажите свой absolute path на  chromedriver
+# укажите свой absolute path на  firefoxdriver
 driver = webdriver.Firefox(
     executable_path="/Users/evelina/PycharmProjects/testTaskPython/Mozilla Firefox/geckodriver"
 )

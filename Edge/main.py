@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 options = webdriver.EdgeOptions()
 from selenium.webdriver.common.by import By
 
-# укажите свой absolute path на  chromedriver
+# укажите свой absolute path на  msedgedriver
 driver = webdriver.Edge(
     executable_path="/Users/evelina/PycharmProjects/testTaskPython/Edge/msedgedriver"
 )
