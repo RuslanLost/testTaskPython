@@ -8,70 +8,85 @@ from selenium.webdriver.common.keys import Keys
 options = webdriver.EdgeOptions()
 from selenium.webdriver.common.by import By
 
-#укажите свой absolute path на msedgedriver
+# укажите свой absolute path на  chromedriver
 driver = webdriver.Edge(
     executable_path="/Users/evelina/PycharmProjects/testTaskPython/Edge/msedgedriver"
 )
 try:
     driver.get(url=url)
     driver.fullscreen_window()
-    time.sleep(5)
-
-    okBtn = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[10]/div/div/span[2]')
-    okBtn.click()
-    inputStreet = driver.find_element(
-        By.XPATH,
-        '//*[@id="root"]/div/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[1]/div/div[1]/div[1]/div/div/div/div[1]/input',
+    okBtn = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "span.app623"))
     )
+
+    okBtn.click()
+    inputStreet = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, '//input[@class="app141 app148 app147 app143 app160 app142"]')
+        )
+    )
+
     inputStreet.click()
     inputStreet.send_keys(streetName)
-    time.sleep(3)
+    time.sleep(1)
     inputStreet.send_keys(Keys.ENTER)
-    inputBuilding = driver.find_element(
-        By.XPATH,
-        '//*[@id="root"]/div/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[1]/div/div[1]/div[2]/div/div/div/div[1]/input',
+    inputBuilding = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, '//input[@class="app141 app148 app147 app143 app160"]')
+        )
     )
+
+    inputBuilding.click()
     inputBuilding.send_keys(buildingNumber)
+    inputBuilding.send_keys(Keys.ENTER)
     radioBtn = driver.find_element(
         By.XPATH,
-        '//*[@id="root"]/div/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div/div/div/div[1]',
+        '//span[@class="app162 app174"]',
     )
     radioBtn.click()
-    apartmentBtn = driver.find_element(
-        By.XPATH, '//*[@id="forSelectField"]/div[1]/div/div/div/ul/li[1]'
-    )
+    apartmentBtn = driver.find_element(By.XPATH, '//li[@class="app186"]')
     apartmentBtn.click()
     findBtn = driver.find_element(
         By.XPATH,
-        '//*[@id="root"]/div/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[1]/div/div[3]/div/div',
+        '//div[@class="app205 app237 app233 app228 app217 app234"]',
     )
     findBtn.click()
-    time.sleep(5)
-    close = driver.find_element(
-        By.XPATH, '//*[@id="root"]/div/div[4]/div/div/div/div/div'
+    closeBtn = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.XPATH, '//div[@datatest="close_popup1_from_quiz_input_tel"]')
+        )
     )
-    close.click()
-    time.sleep(1)
+
+    closeBtn.click()
+
     for i in range(0, 5):
-        connectPromo = driver.find_element(
-            By.XPATH,
-            '//*[@id="root"]/div/div[1]/div[4]/div[4]/div[1]/div/div/div[2]/div[1]/div[6]/div/div/div[2]/div[2]/a',
+        connectPromo = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    '//div[@datatest="providers_form_inspect_connect_tariff_button"]',
+                )
+            )
         )
+
         connectPromo.click()
-        time.sleep(3)
-        inputName = driver.find_element(
-            By.XPATH,
-            '//*[@id="root"]/div/div[1]/div[4]/div/div[2]/div[1]/form/div/div[2]/div/div[2]/input',
+        inputName = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//input[@datatest="providers_provider_order_input_name"]')
+            )
         )
+
         inputName.send_keys(name)
-        inputPhone = driver.find_element(
-            By.XPATH,
-            '//*[@id="root"]/div/div[1]/div[4]/div/div[2]/div[1]/form/div/div[3]/div/div[2]/input',
+        inputPhone = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//input[@datatest="providers_provider_order_input_tel"]')
+            )
         )
+
         inputPhone.send_keys(phoneNumber)
         sendApp = driver.find_element(
             By.XPATH,
-            '//*[@id="root"]/div/div[1]/div[4]/div/div[2]/div[1]/form/div/div[5]',
+            '//div[@data-test="order_form_input_connect_button"]',
         )
         sendApp.click()
         element = WebDriverWait(driver, 10).until(
@@ -79,8 +94,9 @@ try:
                 (By.XPATH, '//*[@id="root"]/div/div[1]/div[4]/div/div[2]/div[1]/form')
             )
         )
+        print("- Успешная отправка заявки №  " + str(i + 1))
         driver.back()
-        print(" - Успешная отправка заявки №  " + str(i + 1))
+
 
 except Exception as ex:
 
